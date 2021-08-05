@@ -6,6 +6,11 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+
+<%@page import="kr.co.sinsa.biz.customer.ProductVO"%>
+<%@page import="kr.co.sinsa.biz.customer.CartVO"%>
+<%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -27,7 +32,10 @@
 
 </style>
 
-
+<% 
+	ArrayList<ProductVO> productList = (ArrayList<ProductVO>) request.getAttribute("productList");
+	ArrayList<CartVO> cartList = (ArrayList<CartVO>) request.getAttribute("cartList");
+%>
 </head>
 
 <body>
@@ -65,80 +73,58 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="shoping__product">Products</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th class="shoping__product">상품</th>
+                                    <th>가격</th>
+                                    <th>수량</th>
+                                    <th>합계</th>
                                     <th></th>
                                 </tr>
                             </thead>
+                            
+                            
                             <tbody>
+                         
+                            
+                            <%
+                            	for(int i=0; i<productList.size(); i++){%>
+                            	
                                 <tr>
                                     <td class="shoping__cart__item">
                                         <img src="${path}/resources/img/cart/cart-1.jpg" alt="">
-                                        <h5>${cartList}1</h5>
+                                        <h5><%=productList.get(i).getPRD_NUM()%><br>
+                                        	<%=productList.get(i).getPRD_CODE()%>
+                                        <%	
+                                        for(int j=0; j<cartList.size(); j++){
+                            				if(productList.get(i).getPRD_NUM() == cartList.get(j).getCART_PRDNUM()){%>
+                            					<br><%=cartList.get(j).getCART_PRDSIZE()%>
+                            				<%}
+                            			}
+                            			%>
+                                        </h5><br>
+                                       
+                                        
                                     </td>
                                     <td class="shoping__cart__price">
-                                        $55.00
+                                        <%=productList.get(i).getPRD_PRICE()%>원
+                                        <%=productList.get(i).getPRD_PRICE() * (100-productList.get(i).getPRD_DISRATE())/100%>원
+                                        <input type="hidden" value="<%=productList.get(i).getPRD_PRICE()%>" id="price<%=i%>">
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="1">
+                                                <input type="text" value="<%=cartList.get(i).getCART_PRDCOUNT()%>" id="ctn<%= i%>">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="shoping__cart__total">
-                                        $110.00
+                                        <span id="sum<%= i %>"></span>
                                     </td>
                                     <td class="shoping__cart__item__close">
                                         <span class="icon_close"></span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="${path}/resources/img/cart/cart-2.jpg" alt="">
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="${path}/resources/img/cart/cart-3.jpg" alt="">
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
+                                <% }%>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -147,7 +133,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href="#" class="primary-btn cart-btn">쇼핑 계속하기</a>
                         <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
                             Upadate Cart</a>
                     </div>
@@ -165,12 +151,29 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
-                        <h5>Cart Total</h5>
+                        <h5>결제예정 금액</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>주문금액 <span>
+                            <%int sum1 = 0;
+                            	for(int i=0; i<productList.size(); i++){
+                            		sum1+=productList.get(i).getPRD_PRICE();
+                            	}%>
+                            <%=sum1%></span></li>
+                            <li>할인금액 <span>
+                            <%int sum2 = 0;
+                            	for(int i=0; i<productList.size(); i++){
+                            		sum2+=productList.get(i).getPRD_PRICE() * productList.get(i).getPRD_DISRATE()/100;
+                            	}%>
+                            <%=sum2%></span></li>
+                            <li>총 금액 <span>
+                            <%int sum3 = 0;
+                            	for(int i=0; i<productList.size(); i++){
+                            		sum3+=productList.get(i).getPRD_PRICE() * (100-productList.get(i).getPRD_DISRATE())/100;
+                            	}%>
+                            <%=sum3%></span>
+                            </li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="#" class="primary-btn">결제하기</a>
                     </div>
                 </div>
             </div>
@@ -178,14 +181,10 @@
     </section>
     <!-- Shoping Cart Section End -->
 
-
-
-
-
-
-
-
 	<jsp:include page="footer.jsp"/>
 </body>
+<script>
 
+
+</script>
 </html>

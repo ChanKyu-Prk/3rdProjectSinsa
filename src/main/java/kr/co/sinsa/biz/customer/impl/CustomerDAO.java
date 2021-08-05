@@ -34,11 +34,13 @@ public class CustomerDAO {
 				for(int i=0; i<cartList.size(); i++) {
 					productVO.setPRD_NUM(cartList.get(i).getCART_PRDNUM());
 					
-					cartProductList.add(productVO);
+					System.out.println(cartList.get(i).getCART_PRDNUM());
+					System.out.println("여기");
+					System.out.println(productVO.getPRD_NUM());
+					cartProductList.add((ProductVO) SST.selectOne("CustomerService.getCartProductList", productVO));
 					
 				}
 			}
-			
 		}
 		
 		return cartProductList;

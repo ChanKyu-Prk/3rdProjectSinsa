@@ -2,6 +2,7 @@ package kr.co.sinsa.view.customer;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,17 @@ public class CustomerController {
 	
 	@SuppressWarnings("null")
 	@RequestMapping("/cart.do")
-	public String getCartList(Model model, HttpSession session) {
-		
+	public String getCartList(Model model, HttpSession session, HttpServletRequest request) {
 		UserVO user = (UserVO)session.getAttribute("user");
-		
-		System.out.println(user);
 		
 		List<CartVO> cartList = customerService.getCartList(user);
 		model.addAttribute("cartList", cartList);
 		
-		
-		System.out.println("456");
-		
-		
 		List<ProductVO> productList = customerService.getCartProductList(cartList);
-		System.out.println("789");
-		
 		model.addAttribute("productList", productList);
 		
+		request.setAttribute("cartList", cartList);
+		request.setAttribute("productList", productList);
 		
 		return "cart";
 	}
