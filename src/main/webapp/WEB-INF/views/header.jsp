@@ -45,12 +45,12 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="#"><img src="${path}/resources/img/logo.png" alt=""></a>
+			<a href="index.do"><img src="${path}/resources/img/logo.png" alt=""></a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
 				<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-				<li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+				<li><a href="cart.do"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
 			</ul>
 
 		</div>
@@ -73,15 +73,6 @@
 			</div>
 
 		</div>
-<!-- 		<ul class="list-group list-group-flush"> -->
-<!-- 			<li class="list-group-item"><a href="#">brand</a></li> -->
-<!-- 			<li class="list-group-item"><a href="#">ALL</a></li> -->
-<!-- 			<li class="list-group-item"><a href="#">men</a></li> -->
-<!-- 			<li class="list-group-item"><a href="#">women</a></li> -->
-<!-- 			<li class="list-group-item"><a href="#">new</a></li> -->
-<!-- 			<li class="list-group-item"><a href="#">best</a></li> -->
-<!-- 		</ul> -->
-
 
 
 				<nav class="humberger__menu__nav mobile-menu">
@@ -155,7 +146,7 @@
 			<div class="row">
 				<div class="col-lg-3">
 
-					<a href="#"><img class="header_sinsa_logo"
+					<a href="index.do"><img class="header_sinsa_logo"
 						src="${path}/resources/img/sinsa_logo.png" alt="ddd"></a>
 
 				</div>
@@ -187,7 +178,7 @@
 					<div class="header__cart">
 						<ul>
 							<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-							<li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+							<li><a href="cart.do"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
 						</ul>
 					</div>
 				</div>

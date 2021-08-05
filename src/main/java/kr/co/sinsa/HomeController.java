@@ -15,6 +15,12 @@ public class HomeController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "index.do", method = RequestMethod.GET)
+	public String home2(Model model) {
+		
+		return "index";
+	}
+	
 
 	
 }
