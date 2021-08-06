@@ -3,7 +3,7 @@ package kr.co.sinsa.biz.user.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.sinsa.biz.user.CustomerVO;
+import kr.co.sinsa.biz.customer.CustomerVO;
 import kr.co.sinsa.biz.user.LoginService;
 import kr.co.sinsa.biz.user.UserVO;
 

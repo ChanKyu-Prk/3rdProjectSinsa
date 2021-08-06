@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.sinsa.biz.customer.CartVO;
 import kr.co.sinsa.biz.customer.CustomerService;
+import kr.co.sinsa.biz.customer.DeleteCartListVO;
 import kr.co.sinsa.biz.customer.ProductVO;
 import kr.co.sinsa.biz.user.UserVO;
 
@@ -29,7 +30,12 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return dao.getCartProductList(cartList);
 	}
-
+	
+	@Override
+	public void deleteCartList(DeleteCartListVO vo) {
+		
+		dao.deleteCartList(vo);
+	}
 
 
 

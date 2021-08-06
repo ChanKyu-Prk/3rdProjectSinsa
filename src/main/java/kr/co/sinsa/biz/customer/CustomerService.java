@@ -10,5 +10,5 @@ public interface CustomerService {
 	
 	public List<ProductVO> getCartProductList(List<CartVO> cartList);
 
-
+	public void deleteCartList(DeleteCartListVO vo);
 }

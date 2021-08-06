@@ -3,7 +3,7 @@
 
 
 <mapper namespace="LoginService">
-	<select id="login" parameterType="kr.co.sinsa.biz.user.CustomerVO" resultType="kr.co.sinsa.biz.user.CustomerVO">
+	<select id="login" parameterType="kr.co.sinsa.biz.customer.CustomerVO" resultType="kr.co.sinsa.biz.customer.CustomerVO">
 		select * from CUSTOMER where CUS_ID=#{CUS_ID} and CUS_PWD=#{CUS_PWD}
 	</select>
 	

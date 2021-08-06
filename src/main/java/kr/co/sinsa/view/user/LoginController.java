@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import kr.co.sinsa.biz.user.CustomerVO;
+import kr.co.sinsa.biz.customer.CustomerVO;
 import kr.co.sinsa.biz.user.LoginService;
 import kr.co.sinsa.biz.user.UserVO;
 

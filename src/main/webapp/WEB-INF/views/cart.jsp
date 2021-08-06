@@ -30,12 +30,25 @@
 }
 
 
+.shoping__cart__item{
+	margin: 30px;
+}
+
+/* .before discount{ */
+/* 	text-decoration:line-through; */
+/* } */
+
+.changecount{
+	border: 1px solid grey;
+}
 </style>
 
 <% 
 	ArrayList<ProductVO> productList = (ArrayList<ProductVO>) request.getAttribute("productList");
 	ArrayList<CartVO> cartList = (ArrayList<CartVO>) request.getAttribute("cartList");
 %>
+
+
 </head>
 
 <body>
@@ -85,18 +98,18 @@
                             <tbody>
                          
                             
-                            <%
+                            <%if(productList.size() != 0 || productList != null){
                             	for(int i=0; i<productList.size(); i++){%>
                             	
                                 <tr>
                                     <td class="shoping__cart__item">
                                         <img src="${path}/resources/img/cart/cart-1.jpg" alt="">
-                                        <h5><%=productList.get(i).getPRD_NUM()%><br>
-                                        	<%=productList.get(i).getPRD_CODE()%>
+                                        <h5>[<%=productList.get(i).getPRD_BRAND()%>] <%=productList.get(i).getPRD_NAME()%><br>
+                                        	
                                         <%	
                                         for(int j=0; j<cartList.size(); j++){
                             				if(productList.get(i).getPRD_NUM() == cartList.get(j).getCART_PRDNUM()){%>
-                            					<br><%=cartList.get(j).getCART_PRDSIZE()%>
+                            					사이즈:<%=cartList.get(j).getCART_PRDSIZE()%>
                             				<%}
                             			}
                             			%>
@@ -104,26 +117,41 @@
                                        
                                         
                                     </td>
-                                    <td class="shoping__cart__price">
-                                        <%=productList.get(i).getPRD_PRICE()%>원
+                                    <td class="shoping__cart__price" >
+                                        <span class="before discount" style="text-decoration:line-through;"><%=productList.get(i).getPRD_PRICE()%>원</span>
                                         <%=productList.get(i).getPRD_PRICE() * (100-productList.get(i).getPRD_DISRATE())/100%>원
-                                        <input type="hidden" value="<%=productList.get(i).getPRD_PRICE()%>" id="price<%=i%>">
+                                        <input type="hidden" value="<%=productList.get(i).getPRD_PRICE()%>">
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="<%=cartList.get(i).getCART_PRDCOUNT()%>" id="ctn<%= i%>">
+                                                <input type="text" value="<%=cartList.get(i).getCART_PRDCOUNT()%>">
                                             </div>
                                         </div>
+                                        <a href="#" class="primary-btn cart-btn changecount">&nbsp;변&nbsp;&nbsp;&nbsp;경&nbsp;</a>
                                     </td>
                                     <td class="shoping__cart__total">
-                                        <span id="sum<%= i %>"></span>
+                                        <span></span>
                                     </td>
                                     <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
+                                    
+                                    <%	
+                                        for(int j=0; j<cartList.size(); j++){
+                            				if(productList.get(i).getPRD_NUM() == cartList.get(j).getCART_PRDNUM()){%>
+                            					<br>
+                            					<form action="cart.do" method="post">
+                                    				<input type="hidden" id="CART_PRDNUM" name="CART_PRDNUM" value="<%=cartList.get(j).getCART_PRDNUM()%>">
+                                    				<button class="icon_close" type="submit"></button>
+                                    			</form>
+                            					
+                            				<%}
+                            			}
+                            			%>
+                                    
                                     </td>
                                 </tr>
-                                <% }%>
+                                <% }
+                                }%>
                                 
                             </tbody>
                         </table>
@@ -140,18 +168,18 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
+<!--                         <div class="shoping__discount"> -->
+<!--                             <h5>Discount Codes</h5> -->
+<%--                             <form action="#"> --%>
+<!--                                 <input type="text" placeholder="Enter your coupon code"> -->
+<!--                                 <button type="submit" class="site-btn">APPLY COUPON</button> -->
+<%--                             </form> --%>
+<!--                         </div> -->
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
-                        <h5>결제예정 금액</h5>
+                        <h5>결제예정금액</h5>
                         <ul>
                             <li>주문금액 <span>
                             <%int sum1 = 0;

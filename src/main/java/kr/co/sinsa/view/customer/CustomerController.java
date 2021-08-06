@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.co.sinsa.biz.customer.CartVO;
 import kr.co.sinsa.biz.customer.CustomerService;
+import kr.co.sinsa.biz.customer.DeleteCartListVO;
 import kr.co.sinsa.biz.customer.ProductVO;
 import kr.co.sinsa.biz.user.UserVO;
 
@@ -22,7 +24,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@SuppressWarnings("null")
-	@RequestMapping("/cart.do")
+	@RequestMapping(value="/cart.do", method=RequestMethod.GET)
 	public String getCartList(Model model, HttpSession session, HttpServletRequest request) {
 		UserVO user = (UserVO)session.getAttribute("user");
 		
@@ -37,4 +39,21 @@ public class CustomerController {
 		
 		return "cart";
 	}
+	
+	@RequestMapping(value="/cart.do", method=RequestMethod.POST)
+	public String deleteCartList(Model model, HttpSession session, HttpServletRequest request) {
+		UserVO user = (UserVO)session.getAttribute("user");
+		System.out.println(request.getParameter("CART_PRDNUM"));
+		int CART_PRDNUM = Integer.parseInt((String) request.getParameter("CART_PRDNUM"));
+		
+		DeleteCartListVO vo = new DeleteCartListVO();
+		vo.setUserID(user.getCUS_ID());
+		vo.setPrdNum(CART_PRDNUM);
+		
+		customerService.deleteCartList(vo);
+		
+		return "redirect:/cart.do";
+	}
+	
+	
 }
